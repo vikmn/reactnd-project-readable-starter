@@ -1,9 +1,4 @@
-import { getAllCategories } from './ReadableApi';
-
-const apiRequest = (url, header) => fetch(url, { headers: header })
-  .then(response => {
-    return response.json();
-  });
+import { getAllCategories, clientRequest, getCategoryPosts, getAllPosts, getPost } from './ReadableApi';
 
 const headers = {
     Accept: "application/json",
@@ -16,7 +11,7 @@ describe('calling the api with header', () => {
   .catch({});
   
   it('returns data for matching url and header', () => {
-    apiRequest('http://google.com', headers)
+    clientRequest('http://google.com', headers)
       .then(res => {
         expect(res.data).toBe('12345');
       });
@@ -29,9 +24,45 @@ describe('calling the api with header', () => {
       Authorization: "tokens"
     };
 
-    apiRequest('http://google.com', incorrectHeader)
+    clientRequest('http://google.com', incorrectHeader)
       .then(res => {
         expect(res.data).toBe(undefined);
       });
   });
+
+  it('returns all categories', () => {
+    fetchMock.get('http://localhost:3001/categories', { data: "12345" });
+
+    getAllCategories()
+      .then(res => {
+        expect(res.data).toBe("12345");
+      });
+    });
+  
+  it('returns all posts for a specified category', () => {
+    fetchMock.get('http://localhost:3001/categoryId/posts', { data: "12345" });
+
+    getCategoryPosts("categoryId")
+      .then(res => {
+        expect(res.data).toBe("12345");
+      });
+  });
+
+  it('returns all posts', () => {
+    fetchMock.get('http://localhost:3001/posts', { data: "12345" });
+
+    getAllPosts()
+      .then(res => {
+        expect(res.data).toBe("12345");
+      });
+    });
+  
+  it('returns specified post', () => {
+    fetchMock.get('http://localhost:3001/posts/postId', { data: { post: "12345" } });
+
+    getPost("postId")
+      .then(res => {
+        expect(res.post).toBe("12345");
+      });
+    });
 });
