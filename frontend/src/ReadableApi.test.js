@@ -1,18 +1,37 @@
 import { getAllCategories } from './ReadableApi';
 
-const apiRequest = url => fetch(url)
+const apiRequest = (url, header) => fetch(url, { headers: header })
   .then(response => {
     return response.json();
   });
 
-describe('testing api', () => {
+const headers = {
+    Accept: "application/json",
+    Authorization: "token"
+};
 
-  it('calls google and returns data to me', () => {
-    fetchMock.get('http://google.com', { data: '12345' });
-
-    apiRequest('http://google.com')
+describe('calling the api with header', () => {
+  fetchMock
+  .get('http://google.com', { data: '12345' }, { headers })
+  .catch({});
+  
+  it('returns data for matching url and header', () => {
+    apiRequest('http://google.com', headers)
       .then(res => {
         expect(res.data).toBe('12345');
       });
-  })
+  });
+  
+  it('returns no data for not matching url and/or header', () => {
+
+    const incorrectHeader = {
+      Accept: "application/json",
+      Authorization: "tokens"
+    };
+
+    apiRequest('http://google.com', incorrectHeader)
+      .then(res => {
+        expect(res.data).toBe(undefined);
+      });
+  });
 });
