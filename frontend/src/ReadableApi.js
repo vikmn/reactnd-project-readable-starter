@@ -12,25 +12,25 @@ const headers = {
   Authorization: token
 };
 
-export const clientRequest = (url, header) => fetch(url, { headers: header })
+export const clientRequest = (url, header = headers) => fetch(url, { headers: header })
   .then(response => {
     return response.json();
   });
 
 export const getAllCategories = () =>
-  clientRequest(`${api}/categories`, { headers })
+  clientRequest(`${api}/categories`)
     .then(data => data)
 
 export const getCategoryPosts = category =>
-  clientRequest(`${api}/${category}/posts`, { headers })
+  clientRequest(`${api}/${category}/posts`)
     .then(data => data)
 
 export const getAllPosts = () =>
-  clientRequest(`${api}/posts`, { headers })
+  clientRequest(`${api}/posts`)
     .then(data => data)
       
 export const getPost = postId =>
-  clientRequest(`${api}/posts/${postId}`, { headers })
+  clientRequest(`${api}/posts/${postId}`)
     .then(data => data.data)
 
 export const updatePost = (post) =>
