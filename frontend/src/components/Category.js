@@ -8,19 +8,18 @@ class Category extends Component{
     }
     
     componentDidMount() {
-        this.props.onLoad();
-        // this.props.onLoad()
-        //     .then(result => {
-        //         this.setState({ categories: [ "test1","test2"]})
-        //     });
+        this.props.onLoad()
+            .then(result => {
+                this.setState({ categories: result.data})
+            });
     }
 
     render() {
         return (
             <ol className="list-container">
-                {/* {this.state.categories.map(category => (
-                    <li key={category}/>
-                ))} */}
+                {this.state.categories.map(category => (
+                    <li key={category.name}>{category.name}</li>
+                ))}
             </ol>
         );
     }
