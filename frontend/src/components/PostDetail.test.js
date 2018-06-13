@@ -6,7 +6,7 @@ const postDetail = {title:"postTitle",body:"post body goes here",author:"author-
 
 describe('given a <PostDetail> component is mounted', () => {
 
-    const spy = jest.spyOn(PostDetail.prototype, 'componentDidMount');
+    const componentDidMountSpy = jest.spyOn(PostDetail.prototype, 'componentDidMount');
     const onLoadMock = jest.fn()
         .mockImplementation(() => Promise.resolve({ data: postDetail }));
     const component = mount(< PostDetail onLoad={ onLoadMock } />);
@@ -18,15 +18,15 @@ describe('given a <PostDetail> component is mounted', () => {
     it('verifies the component props are set up', () => {
         expect(component.props().onLoad).toEqual(onLoadMock);
         expect(onLoadMock).toHaveBeenCalled();
-        expect(PostDetail.prototype.componentDidMount).toHaveBeenCalled();
+        expect(componentDidMountSpy).toHaveBeenCalled();
     });
 
-    it('verifies the component state is populated', () => {
+    it('verifies the component populates the post details', () => {
         expect(component.state().post).toEqual(postDetail);
     });
 });
 
-describe('<PostDetail> component on state update', () => {
+describe('<PostDetail> component renders', () => {
 
     const component = shallow(< PostDetail onLoad={() => Promise.resolve({})} />);
     component.setState({ post: postDetail });
@@ -36,8 +36,29 @@ describe('<PostDetail> component on state update', () => {
         expect(component.find('.post-commentCount').length).toEqual(1);
         expect(component.find('.post-author').length).toEqual(1);
         expect(component.find('.post-currentScore').length).toEqual(1);
-        expect(component.find('.post-vote').length).toEqual(1);
-        expect(component.find('.post-delete').length).toEqual(1);
     });
+});
 
+describe('<PostDetail> component on vote click', () => {
+    const voteSpy = jest.spyOn(PostDetail.prototype, 'updateVote');
+
+    const component = shallow(< PostDetail onLoad={() => Promise.resolve({})} />);
+    component.setState({ post: postDetail });
+
+    it('handles voting on vote click', () => {
+        component.find('.post-vote').simulate('click');
+        expect(voteSpy).toHaveBeenCalled();
+    });
+});
+
+describe('<PostDetail> component on delete post', () => {
+    const deleteSpy = jest.spyOn(PostDetail.prototype, 'deletePost');
+
+    const component = shallow(< PostDetail onLoad={() => Promise.resolve({})} />);
+    component.setState({ post: postDetail });
+
+    it('handles delete on post', () => {
+        component.find('.post-delete').simulate('click');
+        expect(deleteSpy).toHaveBeenCalled();
+     });
 });

@@ -15,6 +15,10 @@ class PostDetail extends Component {
             })
     }
 
+    updateVote() { }
+    
+    deletePost() { }
+
     render() {
         return (
             <div>
@@ -25,8 +29,8 @@ class PostDetail extends Component {
                     <input className="post-author" value={this.state.post.author} onChange={()=>{}} />
                     <input className="post-commentCount" value={this.state.post.comments.length} onChange={()=>{}}/>
                     <input className="post-currentScore" value={this.state.post.currentScore} onChange={()=>{}} />
-                    <input type="button" className="post-vote" />
-                    <input type="button" className="post-delete" />
+                    <input type="button" className="post-vote" onClick={ this.updateVote } />
+                    <input type="button" className="post-delete" onClick={ this.deletePost } />
                 </div>}
             </div>
         );
