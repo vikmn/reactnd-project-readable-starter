@@ -5,7 +5,7 @@ import Category from './Category'
 describe('given a category component', () => {
 
     const categories = [{ name: 'category1' }, { name: 'category2' }];
-    const spy = jest.spyOn(Category.prototype, 'componentDidMount');
+    const componentDidMountSpy = jest.spyOn(Category.prototype, 'componentDidMount');
     const onLoadMock = jest.fn()
         .mockImplementationOnce(() => Promise.resolve({ data: categories }));
     const component = mount(< Category onLoad={ onLoadMock } />);
@@ -17,7 +17,7 @@ describe('given a category component', () => {
     it('verifies the component props are set up', () => {
         expect(component.props().onLoad).toEqual(onLoadMock);
         expect(onLoadMock).toHaveBeenCalledTimes(1);
-        expect(Category.prototype.componentDidMount).toHaveBeenCalledTimes(1);
+        expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
     });
 
     it('renders the categories', () => {
