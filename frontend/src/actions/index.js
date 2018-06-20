@@ -1,6 +1,6 @@
 import { CATEGORY, POST, COMMENT } from "./types";
 
-const actions = {
+export const categoryActions = {
     createCategory(name) {
         return {
             type: CATEGORY.CREATE,
@@ -15,6 +15,10 @@ const actions = {
             id: categoryId,
         };
     },
+
+};
+
+export const postActions = {
 
     createPost(post) {
         return {
@@ -43,8 +47,11 @@ const actions = {
             type: POST.DELETE,
             id: postId,
         }
-    },
-    
+    }  
+};
+
+export const commentActions = {
+
     createComment(comment, postId) {
         return {
             type: COMMENT.CREATE,
@@ -73,7 +80,5 @@ const actions = {
             type: COMMENT.DELETE,
             id: commentId,
         }
-    },
+    }  
 };
-
-export default actions;
