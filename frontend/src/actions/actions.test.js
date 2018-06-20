@@ -1,4 +1,4 @@
-import actions, { CREATE_CATEGORY, CREATE_POST, UPVOTE_POST, DOWNVOTE_POST, DELETE_POST, DELETE_CATEGORY } from './index'
+import actions, { CREATE_CATEGORY, CREATE_POST, UPVOTE_POST, DOWNVOTE_POST, DELETE_POST, DELETE_CATEGORY, CREATE_COMMENT, UPVOTE_COMMENT, DOWNVOTE_COMMENT, DELETE_COMMENT } from './index'
 
 describe('Category actions', () => {
     const categoryName = 'categoryA';
@@ -68,5 +68,54 @@ describe('Post actions', () => {
             };
   
       expect(actions.deletePost(postId)).toEqual(expectedAction);
+    });
+});
+
+describe('Comment actions', () => {
+    const comment = {};
+
+    it('Should create an action to add a comment', () => {
+      const postId = 21;
+      const expectedAction = {
+        type: CREATE_COMMENT,
+          id: 1,
+        postId,
+        comment
+      };
+  
+      expect(actions.createComment(comment, postId)).toEqual(expectedAction);
+    });
+    
+    it('Should create an action to upvote a comment', () => {
+
+        const commentId = 1;
+        const expectedAction = {
+                type: UPVOTE_COMMENT,
+                id: commentId
+            };
+  
+      expect(actions.upvoteComment(commentId)).toEqual(expectedAction);
+    });
+
+    it('Should create an action to down vote a comment', () => {
+
+        const commentId = 1;
+        const expectedAction = {
+                type: DOWNVOTE_COMMENT,
+                id: commentId
+            };
+  
+      expect(actions.downvoteComment(commentId)).toEqual(expectedAction);
+    });
+    
+    it('Should create an action to delete a comment', () => {
+
+        const commentId = 1;
+        const expectedAction = {
+                type: DELETE_COMMENT,
+                id: commentId
+            };
+  
+      expect(actions.deleteComment(commentId)).toEqual(expectedAction);
     });
 });
