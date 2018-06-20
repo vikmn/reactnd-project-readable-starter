@@ -1,11 +1,12 @@
-import actions, { CREATE_CATEGORY, CREATE_POST, UPVOTE_POST, DOWNVOTE_POST, DELETE_POST, DELETE_CATEGORY, CREATE_COMMENT, UPVOTE_COMMENT, DOWNVOTE_COMMENT, DELETE_COMMENT } from './index'
+import actions from './index'
+import { CATEGORY, POST, COMMENT } from "./types";
 
 describe('Category actions', () => {
     const categoryName = 'categoryA';
   
     it('Should create an action to add a category', () => {
       const expectedAction = {
-        type: CREATE_CATEGORY,
+        type: CATEGORY.CREATE,
         id: 1,
         name: categoryName,
       };
@@ -16,7 +17,7 @@ describe('Category actions', () => {
     it('Should create an action to delete a category', () => {
       const categoryId = 2;
       const expectedAction = {
-        type: DELETE_CATEGORY,
+        type: CATEGORY.DELETE,
         id: categoryId
         };
   
@@ -29,7 +30,7 @@ describe('Post actions', () => {
 
     it('Should create an action to add a post', () => {
       const expectedAction = {
-        type: CREATE_POST,
+        type: POST.CREATE,
         id: 1,
         post:post
       };
@@ -41,8 +42,8 @@ describe('Post actions', () => {
 
         const postId = 1;
         const expectedAction = {
-                type: UPVOTE_POST,
-                id: 1
+                type: POST.UPVOTE,
+                id: postId
             };
   
       expect(actions.upvotePost(postId)).toEqual(expectedAction);
@@ -52,8 +53,8 @@ describe('Post actions', () => {
 
         const postId = 1;
         const expectedAction = {
-                type: DOWNVOTE_POST,
-                id: 1
+                type: POST.DOWNVOTE,
+                id: postId
             };
   
       expect(actions.downvotePost(postId)).toEqual(expectedAction);
@@ -63,8 +64,8 @@ describe('Post actions', () => {
 
         const postId = 1;
         const expectedAction = {
-                type: DELETE_POST,
-                id: 1
+                type: POST.DELETE,
+                id: postId
             };
   
       expect(actions.deletePost(postId)).toEqual(expectedAction);
@@ -77,7 +78,7 @@ describe('Comment actions', () => {
     it('Should create an action to add a comment', () => {
       const postId = 21;
       const expectedAction = {
-        type: CREATE_COMMENT,
+        type: COMMENT.CREATE,
           id: 1,
         postId,
         comment
@@ -90,7 +91,7 @@ describe('Comment actions', () => {
 
         const commentId = 1;
         const expectedAction = {
-                type: UPVOTE_COMMENT,
+                type: COMMENT.UPVOTE,
                 id: commentId
             };
   
@@ -101,7 +102,7 @@ describe('Comment actions', () => {
 
         const commentId = 1;
         const expectedAction = {
-                type: DOWNVOTE_COMMENT,
+                type: COMMENT.DOWNVOTE,
                 id: commentId
             };
   
@@ -112,7 +113,7 @@ describe('Comment actions', () => {
 
         const commentId = 1;
         const expectedAction = {
-                type: DELETE_COMMENT,
+                type: COMMENT.DELETE,
                 id: commentId
             };
   

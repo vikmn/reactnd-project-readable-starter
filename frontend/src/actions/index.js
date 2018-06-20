@@ -1,17 +1,9 @@
-export const CREATE_CATEGORY = "CREATE_CATEGORY";
-export const DELETE_CATEGORY = "DELETE_CATEGORY";
-export const CREATE_POST = "CREATE_POST";
-export const UPVOTE_POST = "UPVOTE_POST";
-export const DOWNVOTE_POST = "DOWNVOTE_POST";
-export const DELETE_POST = "DELETE_POST";
-export const CREATE_COMMENT = "CREATE_COMMENT";
-export const UPVOTE_COMMENT = "UPVOTE_COMMENT";
-export const DOWNVOTE_COMMENT = "DOWNVOTE_COMMENT";
-export const DELETE_COMMENT = "DELETE_COMMENT";
+import { CATEGORY, POST, COMMENT } from "./types";
+
 const actions = {
     createCategory(name) {
         return {
-            type: CREATE_CATEGORY,
+            type: CATEGORY.CREATE,
             id: 1,
             name
         };
@@ -19,14 +11,14 @@ const actions = {
     
     deleteCategory(categoryId) {
         return {
-            type: DELETE_CATEGORY,
+            type: CATEGORY.DELETE,
             id: categoryId,
         };
     },
 
     createPost(post) {
         return {
-            type: CREATE_POST,
+            type: POST.CREATE,
             id: 1,
             post
         }
@@ -34,28 +26,28 @@ const actions = {
 
     upvotePost(postId) {
         return {
-            type: UPVOTE_POST,
+            type: POST.UPVOTE,
             id: postId,
         }
     },
     
     downvotePost(postId) {
         return {
-            type: DOWNVOTE_POST,
+            type: POST.DOWNVOTE,
             id: postId,
         }
     },
     
     deletePost(postId) {
         return {
-            type: DELETE_POST,
+            type: POST.DELETE,
             id: postId,
         }
     },
     
     createComment(comment, postId) {
         return {
-            type: CREATE_COMMENT,
+            type: COMMENT.CREATE,
             id: 1,
             postId,
             comment
@@ -64,21 +56,21 @@ const actions = {
 
     upvoteComment(commentId) {
         return {
-            type: UPVOTE_COMMENT,
+            type: COMMENT.UPVOTE,
             id: commentId,
         }
     },
     
     downvoteComment(commentId) {
         return {
-            type: DOWNVOTE_COMMENT,
+            type: COMMENT.DOWNVOTE,
             id: commentId,
         }
     },
     
     deleteComment(commentId) {
         return {
-            type: DELETE_COMMENT,
+            type: COMMENT.DELETE,
             id: commentId,
         }
     },
