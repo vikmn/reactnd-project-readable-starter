@@ -85,6 +85,24 @@ describe('Post Actions', () => {
 
         expect(reducer(initialState, action).posts[postId]).toEqual(expectedState);
     });
+
+    it('deletes the specified post', () => {
+        const postId = 2;
+
+        const initialState = {
+            posts: {
+                "2": {
+                    id: postId,
+                    votes: 0,
+                    comments: { }
+                }
+            }
+        };
+
+        const action = postActions.deletePost(postId);
+
+        expect(reducer(initialState, action).posts).toEqual({});
+    });
 });
 
 describe('Comment actions', () => {

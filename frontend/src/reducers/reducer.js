@@ -1,7 +1,7 @@
 import { POST, COMMENT } from "../actions/types";
 
 export const initialState = {
-    posts: { }
+    posts: {}
 };
 
 export const reducer = (state = initialState, action) => {
@@ -19,9 +19,9 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 posts: {
                     ...state.posts,
-                    [action.id]:{
+                    [action.id]: {
                         id: action.id,
-                        votes: state.posts[action.id].votes +1,
+                        votes: state.posts[action.id].votes + 1,
                     }
                 }
             };
@@ -30,18 +30,29 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 posts: {
                     ...state.posts,
-                    [action.id]:{
+                    [action.id]: {
                         id: action.id,
                         votes: state.posts[action.id].votes > 0 ? state.posts[action.id].votes - 1 : 0,
                     }
                 }
+            };
+        case POST.DELETE:
+            return {
+                ...state,
+                posts: Object.keys(state.posts)
+                    .filter(key => key != action.id)
+                    .reduce((obj, key) => {
+                        return {
+                            [key]: state.posts[key]
+                        }
+                    }, {})
             };
         case COMMENT.CREATE:
             return {
                 ...state,
                 posts: {
                     ...state.posts,
-                    [action.postId]:{
+                    [action.postId]: {
                         ...state.posts[action.postId],
                         comments: {
                             ...state.posts[action.postId].comments,
@@ -55,7 +66,7 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 posts: {
                     ...state.posts,
-                    [action.postId]:{
+                    [action.postId]: {
                         ...state.posts[action.postId],
                         comments: {
                             ...state.posts[action.postId].comments,
@@ -72,7 +83,7 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 posts: {
                     ...state.posts,
-                    [action.postId]:{
+                    [action.postId]: {
                         ...state.posts[action.postId],
                         comments: {
                             ...state.posts[action.postId].comments,
@@ -89,20 +100,20 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 posts: {
                     ...state.posts,
-                    [action.postId]:{
+                    [action.postId]: {
                         ...state.posts[action.postId],
-                        comments: 
-                            Object.keys(state.posts[action.postId].comments)
-                                .filter(key => key != action.id)
-                                .reduce((obj, key) => {
-                                    return {
-                                        [key]: state.posts[action.postId].comments[key]
-                                    }},{})
+                        comments: Object.keys(state.posts[action.postId].comments)
+                            .filter(key => key != action.id)
+                            .reduce((obj, key) => {
+                                return {
+                                    [key]: state.posts[action.postId].comments[key]
+                                }
+                            }, {})
                     }
                 }
             };
-        
-        default: return state;
+        default:
+            return state;
     }
 };
 
