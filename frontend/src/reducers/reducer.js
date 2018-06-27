@@ -5,6 +5,10 @@ export const initialState = {
         "2": {
             id: 2,
             votes: 3
+        },
+        "3": {
+            id: 3,
+            votes: 0
         }
     }
 };
@@ -27,6 +31,17 @@ export const reducer = (state = initialState, action) => {
                     [action.id]:{
                         id: action.id,
                         votes: state.posts[action.id].votes +1,
+                    }
+                }
+        }; 
+        case POST.DOWNVOTE:
+            return {
+                ...state,
+                posts: {
+                    ...state.posts,
+                    [action.id]:{
+                        id: action.id,
+                        votes: state.posts[action.id].votes > 0 ? state.posts[action.id].votes - 1 : 0,
                     }
                 }
         }; 

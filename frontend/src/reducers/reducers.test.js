@@ -38,4 +38,36 @@ describe('Create post', () => {
         };
         expect(reducer(undefined, action).posts[action.id]).toEqual(expectedState);
     });
+    
+    it('downvoting a post should return decremented vote count', () => {
+        const action = {
+            type: POST.DOWNVOTE,
+            id: 2,
+            post: {
+                votes: 1
+            }
+        };
+
+        const expectedState = {
+                id: action.id,
+                votes: 2
+        };
+        expect(reducer(undefined, action).posts[action.id]).toEqual(expectedState);
+    });
+    
+    it('downvoting a post should not decrement vote count when 0', () => {
+        const action = {
+            type: POST.DOWNVOTE,
+            id: 3,
+            post: {
+                votes: 1
+            }
+        };
+
+        const expectedState = {
+                id: action.id,
+                votes: 0
+        };
+        expect(reducer(undefined, action).posts[action.id]).toEqual(expectedState);
+    });
 });
