@@ -1,11 +1,11 @@
 import { CATEGORY, POST, COMMENT } from "./types";
 
 export const categoryActions = {
-    createCategory(name) {
+    createCategory(category) {
         return {
             type: CATEGORY.CREATE,
             id: 1,
-            name
+            category
         };
     },
     

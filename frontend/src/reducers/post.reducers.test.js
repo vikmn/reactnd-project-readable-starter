@@ -1,9 +1,9 @@
 import { reducer } from './reducer';
-import { postActions } from '../actions/.';
+import { postActions, categoryActions } from '../actions/.';
 
 describe('Reducer', () => {
     it('Should return the initial state when no action passed', () => {
-        expect(reducer(undefined, {})).toEqual({ posts: {} });
+        expect(reducer(undefined, {})).toEqual({ categories: {}, posts: {} });
     });
 });
 
@@ -102,5 +102,39 @@ describe('Post Actions', () => {
         const action = postActions.deletePost(postId);
 
         expect(reducer(initialState, action).posts).toEqual({});
+    });
+});
+
+describe('Category Actions', () => {
+    it('creates a category', () => {
+
+        const initialState = {
+            categories: {},
+            posts: {}
+        }; 
+        const category = { id: 1, name: "categoryA" };
+        const action = categoryActions.createCategory(category);
+
+        const expectedState = category;
+
+        expect(reducer(initialState, action).categories[category.id]).toEqual(expectedState);
+    });
+
+
+    it('deletes the specified category', () => {
+        const categoryId = 2;
+
+        const initialState = {
+            categories: {
+                "2": {
+                    id: categoryId,
+                    name: "categoryA"
+                }
+            }
+        };
+
+        const action = categoryActions.deleteCategory(categoryId);
+
+        expect(reducer(initialState, action).categories).toEqual({});
     });
 });
