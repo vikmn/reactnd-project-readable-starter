@@ -84,6 +84,23 @@ export const reducer = (state = initialState, action) => {
                     }
                 }
             };
+        case COMMENT.DELETE:
+            return {
+                ...state,
+                posts: {
+                    ...state.posts,
+                    [action.postId]:{
+                        ...state.posts[action.postId],
+                        comments: 
+                            Object.keys(state.posts[action.postId].comments)
+                                .filter(key => key != action.id)
+                                .reduce((obj, key) => {
+                                    return {
+                                        [key]: state.posts[action.postId].comments[key]
+                                    }},{})
+                    }
+                }
+            };
         
         default: return state;
     }

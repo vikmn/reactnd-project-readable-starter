@@ -198,4 +198,28 @@ describe('Comment actions', () => {
         expect(reducer(initialState, action).posts[postId].comments[commentId]).toEqual(expectedState);
 
     });
+    
+    it('delete a comment for the specified post', () => {
+        const postId = 2;
+        const commentId = 1;
+
+        const initialState = {
+            posts: {
+                "2": {
+                    id: postId,
+                    votes: 0,
+                    comments: {
+                        "1": {
+                            id: commentId,
+                            votes: 0,
+                        }
+                    }
+                }
+            }
+        };
+
+        const action = commentActions.deleteComment(commentId, postId);
+
+        expect(reducer(initialState, action).posts[postId].comments).toEqual({});
+    });
 });

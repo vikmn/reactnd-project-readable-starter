@@ -77,10 +77,11 @@ export const commentActions = {
         }
     },
 
-    deleteComment(commentId) {
+    deleteComment(commentId, postId) {
         return {
             type: COMMENT.DELETE,
             id: commentId,
+            postId
         }
     }  
 };

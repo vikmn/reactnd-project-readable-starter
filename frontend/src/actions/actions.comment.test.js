@@ -43,13 +43,14 @@ describe('Comment actions', () => {
     });
     
     it('Should create an action to delete a comment', () => {
+      const postId = 2;
+      const commentId = 1;
+      const expectedAction = {
+        type: COMMENT.DELETE,
+        id: commentId,
+        postId
+      };
 
-        const commentId = 1;
-        const expectedAction = {
-                type: COMMENT.DELETE,
-                id: commentId
-            };
-  
-      expect(commentActions.deleteComment(commentId)).toEqual(expectedAction);
+      expect(commentActions.deleteComment(commentId, postId)).toEqual(expectedAction);
     });
 });
