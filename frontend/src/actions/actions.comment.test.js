@@ -31,13 +31,15 @@ describe('Comment actions', () => {
 
     it('Should create an action to down vote a comment', () => {
 
-        const commentId = 1;
-        const expectedAction = {
-                type: COMMENT.DOWNVOTE,
-                id: commentId
-            };
-  
-      expect(commentActions.downvoteComment(commentId)).toEqual(expectedAction);
+      const commentId = 1;
+      const postId = 2;
+      const expectedAction = {
+        type: COMMENT.DOWNVOTE,
+        id: commentId,
+        postId
+      };
+
+      expect(commentActions.downvoteComment(commentId, postId)).toEqual(expectedAction);
     });
     
     it('Should create an action to delete a comment', () => {

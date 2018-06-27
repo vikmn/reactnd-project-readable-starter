@@ -69,13 +69,14 @@ export const commentActions = {
         }
     },
     
-    downvoteComment(commentId) {
+    downvoteComment(commentId, postId) {
         return {
             type: COMMENT.DOWNVOTE,
             id: commentId,
+            postId
         }
     },
-    
+
     deleteComment(commentId) {
         return {
             type: COMMENT.DELETE,

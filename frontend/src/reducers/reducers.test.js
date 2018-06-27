@@ -15,7 +15,7 @@ describe('Post Actions', () => {
                 id: 1,
                 votes: 1,
         });
-        
+
         const expectedState = {
             ...action.post
         };
@@ -44,7 +44,7 @@ describe('Post Actions', () => {
 
         expect(reducer(initialState, action).posts[postId]).toEqual(expectedState);
     });
-    
+
     it('downvoting a post returns decremented vote count', () => {
 
         const postId = 2;
@@ -104,7 +104,7 @@ describe('Comment actions', () => {
             id: 1,
             votes: 1,
         }, postId);
-        
+
         const expectedState = {
             ...action.comment
         };
@@ -141,44 +141,61 @@ describe('Comment actions', () => {
         expect(reducer(initialState, action).posts[postId].comments[commentId]).toEqual(expectedState);
     });
 
-    // it('downvoting a post should return decremented vote count', () => {
+    it('downvoting a comment should return decremented vote count for the specified comment', () => {
 
-    //     const postId = 2;
-    //     const initialState = {
-    //         posts: {
-    //             "2": {
-    //                 id: postId,
-    //                 votes: 3
-    //             }
-    //         }
-    //     };
-    //     const action = postActions.downvotePost(postId);
+        const postId = 2;
+        const commentId = 1;
+        const initialState = {
+            posts: {
+                "2": {
+                    id: postId,
+                    votes: 3,
+                    comments: {
+                        "1": {
+                            id: commentId,
+                            votes: 1,
+                        }
+                    }
+                }
+            }
+        };
+        const action = commentActions.downvoteComment(commentId, postId);
 
-    //     const expectedState = {
-    //             id: postId,
-    //             votes: 2
-    //     };
+        const expectedState = {
+                id: commentId,
+                votes: 0
+        };
 
-    //     expect(reducer(initialState, action).posts[postId]).toEqual(expectedState);
-    // });
-    
-    // it('downvoting a post should not decrement vote count when 0', () => {
-    //     const postId = 2;
-    //     const initialState = {
-    //         posts: {
-    //             "2": {
-    //                 id: postId,
-    //                 votes: 0
-    //             }
-    //         }
-    //     };
-    //     const action = postActions.downvotePost(postId);
+        expect(reducer(initialState, action).posts[postId].comments[commentId]).toEqual(expectedState);
+    });
 
-    //     const expectedState = {
-    //             id: postId,
-    //             votes: 0
-    //     };
+    it('downvoting a comment should not decrement vote count when 0', () => {
+        const postId = 2;
+        const commentId = 1;
 
-    //     expect(reducer(initialState, action).posts[postId]).toEqual(expectedState);
-    // });
+        const initialState = {
+            posts: {
+                "2": {
+                    id: postId,
+                    votes: 0,
+                    comments: {
+                        "1": {
+                            id: commentId,
+                            votes: 0,
+                        }
+                    }
+                }
+            }
+        };
+
+        const action = commentActions.downvoteComment(commentId, postId);
+
+        const expectedState = {
+                id: commentId,
+                votes: 0
+        };
+
+        expect(reducer(initialState, action).posts[postId].comments[commentId]).toEqual(expectedState);
+
+    });
 });

@@ -67,6 +67,23 @@ export const reducer = (state = initialState, action) => {
                     }
                 }
             };
+        case COMMENT.DOWNVOTE:
+            return {
+                ...state,
+                posts: {
+                    ...state.posts,
+                    [action.postId]:{
+                        ...state.posts[action.postId],
+                        comments: {
+                            ...state.posts[action.postId].comments,
+                            [action.id]: {
+                                ...state.posts[action.postId].comments[action.id],
+                                votes: state.posts[action.postId].comments[action.id].votes > 0 ? state.posts[action.postId].comments[action.id].votes - 1 : 0,
+                            }
+                        }
+                    }
+                }
+            };
         
         default: return state;
     }
