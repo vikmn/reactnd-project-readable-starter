@@ -19,12 +19,14 @@ describe('Comment actions', () => {
     it('Should create an action to upvote a comment', () => {
 
         const commentId = 1;
+      const postId = 2;
         const expectedAction = {
-                type: COMMENT.UPVOTE,
-                id: commentId
-            };
-  
-      expect(commentActions.upvoteComment(commentId)).toEqual(expectedAction);
+          type: COMMENT.UPVOTE,
+          id: commentId,
+          postId: postId,
+      };
+
+      expect(commentActions.upvoteComment(commentId, postId)).toEqual(expectedAction);
     });
 
     it('Should create an action to down vote a comment', () => {

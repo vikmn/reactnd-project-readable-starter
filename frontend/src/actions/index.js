@@ -61,10 +61,11 @@ export const commentActions = {
         }
     },
 
-    upvoteComment(commentId) {
+    upvoteComment(commentId, postId) {
         return {
             type: COMMENT.UPVOTE,
             id: commentId,
+            postId
         }
     },
     
