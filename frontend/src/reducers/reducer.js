@@ -1,16 +1,7 @@
 import { POST } from "../actions/types";
 
 export const initialState = {
-    posts: {
-        "2": {
-            id: 2,
-            votes: 3
-        },
-        "3": {
-            id: 3,
-            votes: 0
-        }
-    }
+    posts: { }
 };
 
 export const reducer = (state = initialState, action) => {

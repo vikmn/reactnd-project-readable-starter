@@ -18,6 +18,7 @@ describe('Post actions', () => {
         };
         expect(postActions.upvotePost(postId)).toEqual(expectedAction);
     });
+
     it('Should create an action to down vote a post', () => {
         const postId = 1;
         const expectedAction = {
@@ -26,6 +27,7 @@ describe('Post actions', () => {
         };
         expect(postActions.downvotePost(postId)).toEqual(expectedAction);
     });
+
     it('Should create an action to delete a post', () => {
         const postId = 1;
         const expectedAction = {
