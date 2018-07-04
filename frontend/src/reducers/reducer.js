@@ -23,7 +23,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 categories: Object.keys(state.categories)
-                    .filter(key => key != action.id)
+                    .filter(key => key !== action.id)
                     .reduce((obj, key) => {
                         return {
                             [key]: state.categories[key]
@@ -64,7 +64,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: Object.keys(state.posts)
-                    .filter(key => key != action.id)
+                    .filter(key => key !== action.id)
                     .reduce((obj, key) => {
                         return {
                             [key]: state.posts[key]
@@ -127,7 +127,7 @@ export const reducer = (state = initialState, action) => {
                     [action.postId]: {
                         ...state.posts[action.postId],
                         comments: Object.keys(state.posts[action.postId].comments)
-                            .filter(key => key != action.id)
+                            .filter(key => key !== action.id)
                             .reduce((obj, key) => {
                                 return {
                                     [key]: state.posts[action.postId].comments[key]
