@@ -1,30 +1,26 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 
 class Category extends Component{
     constructor(props) {
         super(props);
-        this.state = { categories:[] };
-    }
-    
-    componentDidMount() {
-        this.props.onLoad()
-            .then(result => {
-                this.setState({ categories: result.data})
-            });
     }
 
     render() {
+        console.log('Props', this.props);
         return (
             <ol className="list-container">
-                {this.state.categories.map(category => (
+                {this.props.categories.map(category => (
                     <li key={category.name}>{category.name}</li>
                 ))}
             </ol>
         );
     }
 }
-Category.propTypes = {
-    onLoad: PropTypes.func
-  };
-export default Category;
+
+const mapStateToProps = (state) =>
+    ({
+        categories: Object.keys(state.categories).map(key => state.categories[key])
+    });
+
+export default connect(mapStateToProps)(Category);
