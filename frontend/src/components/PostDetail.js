@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { postActions } from '../actions/index';
 
 class PostDetail extends Component {
 
     constructor(props) {
         super(props);
+
+        this.upVotePost = this.upVotePost.bind(this);
+        this.downVotePost = this.downVotePost.bind(this);
+        this.deletePost = this.deletePost.bind(this);
     }
 
-    updateVote() { }
+    upVotePost(postId) { 
+        this.props.upvotePost(postId);
+    }
     
-    deletePost() { }
+    downVotePost(postId) { 
+        this.props.downVotePost(postId);
+    }
+    
+    deletePost(postId) {
+        this.props.delete(postId);
+    }
 
     render() {
         const postDetails = this.props.post;
@@ -22,23 +35,26 @@ class PostDetail extends Component {
                     <input className="post-author" value={postDetails.author} onChange={()=>{}} />
                     <input className="post-commentCount" value={postDetails.comments.length} onChange={()=>{}}/>
                     <input className="post-currentScore" value={postDetails.currentScore} onChange={()=>{}} />
-                    <input type="button" className="post-vote" onClick={ this.updateVote } />
-                    <input type="button" className="post-delete" onClick={ this.deletePost } />
+                    <input type="button" className="post-vote" onClick={ () => this.upVotePost(postDetails.id) } />
+                    <input type="button" className="post-downVote" onClick={ () => this.downVotePost(postDetails.id) } />
+                    <input type="button" className="post-delete" onClick={ () => this.deletePost(postDetails.id) } />
                 </div>}
             </div>
         );
     };
 }
 
-const mapStateToProps = (state) =>
+const mapStateToProps = (state, ownProps) =>
     ({
         post: {
-            title: "postTitle",
-            body: "post body goes here",
-            author: "author-1",
-            currentScore: 2,
-            comments: []
+            ...state.posts["2"]
         }
     });
 
-export default connect(mapStateToProps)(PostDetail);
+const mapDispatchToProps = dispatch => ({
+    upvotePost: postId => dispatch(postActions.upvotePost(postId)),
+    downVotePost: postId => dispatch(postActions.downvotePost(postId)),
+    delete: postId => dispatch(postActions.deletePost(postId))
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(PostDetail);

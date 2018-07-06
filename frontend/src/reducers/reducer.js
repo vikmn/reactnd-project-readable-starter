@@ -44,7 +44,7 @@ export const reducer = (state = initialState, action) => {
                 posts: {
                     ...state.posts,
                     [action.id]: {
-                        id: action.id,
+                        ...state.posts[action.id],
                         votes: state.posts[action.id].votes + 1,
                     }
                 }
@@ -55,8 +55,8 @@ export const reducer = (state = initialState, action) => {
                 posts: {
                     ...state.posts,
                     [action.id]: {
-                        id: action.id,
-                        votes: state.posts[action.id].votes > 0 ? state.posts[action.id].votes - 1 : 0,
+                        ...state.posts[action.id],
+                        votes: state.posts[action.id].votes > 0 ? (state.posts[action.id].votes - 1) : 0,
                     }
                 }
             };
