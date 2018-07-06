@@ -1,63 +1,86 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import Comment from './Comment';
+import { createStore } from 'redux';
+import reducer from '../reducers/reducer';
 
-const comment = {body:"comment body goes here",author:"author-1",currentScore:2};
+const comment = {
+    id: 999,
+    body: "comment body goes here",
+    author: "author-1",
+    currentScore: 2,
+    votes: 0,
+};
 
 describe('given a <Comment> component is mounted', () => {
 
-    const componentDidMountSpy = jest.spyOn(Comment.prototype, 'componentDidMount');
-    const onLoadMock = jest.fn()
-        .mockImplementation(() => Promise.resolve({ data: comment }));
-    const component = mount(< Comment onLoad={ onLoadMock } />);
+    const initialState = {
+        posts: {
+            "9999": {
+                id: 9999,
+                votes: 0,
+                comments: {
+                    "999": {
+                        ...comment
+                    }
+                }
+            }
+        }
+    };
+    const store = createStore(() => reducer(initialState, {}));
+    const component = shallow(< Comment store={ store } />);
 
     it('renders without crashing', () => {
         expect(component.exists()).toEqual(true);
     });
 
-    it('verifies the component props are set up', () => {
-        expect(component.props().onLoad).toEqual(onLoadMock);
-        expect(onLoadMock).toHaveBeenCalled();
-        expect(componentDidMountSpy).toHaveBeenCalled();
-    });
-
     it('verifies the component populates the comment details', () => {
-        expect(component.state().comment).toEqual(comment);
+        expect(component.props().comment).toEqual(comment);
     });
 });
 
 describe('<Comment> component renders', () => {
 
-    const component = shallow(< Comment onLoad={() => Promise.resolve({})} />);
-    component.setState({ comment: comment });
+    const initialState = {
+        posts: {
+            "9999": {
+                id: 9999,
+                votes: 0,
+                comments: {
+                    "999": {
+                        ...comment
+                    }
+                }
+            }
+        }
+    };
+
+    const store = createStore(() => reducer(initialState, {}));
+    const component = shallow(< Comment store={ store } />);
 
     it('renders the comment details', () => {
-        expect(component.find('.comment-body').length).toEqual(1);
-        expect(component.find('.comment-author').length).toEqual(1);
-        expect(component.find('.comment-currentScore').length).toEqual(1);
+        expect(component.dive().find('.comment-body').length).toEqual(1);
+        expect(component.dive().find('.comment-author').length).toEqual(1);
+        expect(component.dive().find('.comment-currentScore').length).toEqual(1);
     });
 });
 
 describe('<Comment> component on vote click', () => {
-    const voteSpy = jest.spyOn(Comment.prototype, 'updateVote');
 
-    const component = shallow(< Comment onLoad={() => Promise.resolve({})} />);
-    component.setState({ comment: comment });
+    const store = createStore(reducer);
+    const component = shallow(< Comment store={ store } />);
 
     it('handles voting on vote click', () => {
-        component.find('.comment-vote').simulate('click');
-        expect(voteSpy).toHaveBeenCalled();
+        component.dive().find('.comment-vote').simulate('click');
     });
 });
 
 describe('<Comment> component on delete comment', () => {
-    const deleteSpy = jest.spyOn(Comment.prototype, 'deleteComment');
 
-    const component = shallow(< Comment onLoad={() => Promise.resolve({})} />);
-    component.setState({ comment: comment });
+    const store = createStore(reducer);
+    const component = shallow(< Comment store={ store } />);
 
     it('handles delete on comment', () => {
-        component.find('.comment-delete').simulate('click');
-        expect(deleteSpy).toHaveBeenCalled();
-     });
+        component.dive().find('.comment-delete').simulate('click');
+    });
 });
