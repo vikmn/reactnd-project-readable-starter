@@ -27,7 +27,7 @@ describe('given a <Comment> component is mounted', () => {
             }
         }
     };
-    const store = createStore(() => reducer(initialState, {}));
+    const store = createStore(reducer,initialState);
     const component = shallow(< Comment store={ store } />);
 
     it('renders without crashing', () => {
@@ -35,7 +35,10 @@ describe('given a <Comment> component is mounted', () => {
     });
 
     it('verifies the component populates the comment details', () => {
-        expect(component.props().comment).toEqual(comment);
+        expect(component.props().comment).toEqual({
+            ...comment,
+            postId: 9999
+        });
     });
 });
 
@@ -48,14 +51,14 @@ describe('<Comment> component renders', () => {
                 votes: 0,
                 comments: {
                     "999": {
-                        ...comment
+                        ...comment,
                     }
                 }
             }
         }
     };
 
-    const store = createStore(() => reducer(initialState, {}));
+    const store = createStore(reducer,initialState);
     const component = shallow(< Comment store={ store } />);
 
     it('renders the comment details', () => {
@@ -65,22 +68,83 @@ describe('<Comment> component renders', () => {
     });
 });
 
-describe('<Comment> component on vote click', () => {
+describe('<Comment> component on upvote click', () => {
 
-    const store = createStore(reducer);
+    const initialState = {
+        posts: {
+            "9999": {
+                id: 9999,
+                votes: 0,
+                comments: {
+                    "999": {
+                        ...comment,
+                        votes: 2,
+                    }
+                }
+            }
+        }
+    };
+
+    const store = createStore(reducer, initialState);
     const component = shallow(< Comment store={ store } />);
 
     it('handles voting on vote click', () => {
         component.dive().find('.comment-vote').simulate('click');
+        component.update();
+        expect(component.props().comment.votes).toEqual(3);
+    });
+});
+
+describe('<Comment> component on downvote click', () => {
+
+    const initialState = {
+        posts: {
+            "9999": {
+                id: 9999,
+                votes: 0,
+                comments: {
+                    "999": {
+                        ...comment,
+                        votes: 2,
+                    }
+                }
+            }
+        }
+    };
+
+    const store = createStore(reducer, initialState);
+    const component = shallow(< Comment store={ store } />);
+
+    it('handles voting on vote click', () => {
+        component.dive().find('.comment-downVote').simulate('click');
+        component.update();
+        expect(component.props().comment.votes).toEqual(1);
     });
 });
 
 describe('<Comment> component on delete comment', () => {
 
-    const store = createStore(reducer);
+    const initialState = {
+        posts: {
+            "9999": {
+                id: 9999,
+                votes: 0,
+                comments: {
+                    "999": {
+                        ...comment,
+                        votes: 3
+                    }
+                }
+            }
+        }
+    };
+
+    const store = createStore(reducer, initialState);
     const component = shallow(< Comment store={ store } />);
 
     it('handles delete on comment', () => {
         component.dive().find('.comment-delete').simulate('click');
+        component.update();
+        expect(component.props().comment).toEqual({});
     });
 });

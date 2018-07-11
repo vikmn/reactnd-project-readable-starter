@@ -7,7 +7,6 @@ class Category extends Component{
     }
 
     render() {
-        console.log('Props', this.props);
         return (
             <ol className="list-container">
                 {this.props.categories.map(category => (

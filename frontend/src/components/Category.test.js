@@ -17,7 +17,7 @@ describe('given a category component', () => {
             "9999": category
         }
     };
-    const store = createStore(() => reducer(initialState, {}));
+    const store = createStore(reducer,initialState);
     const component = shallow(< Category store={store}/>);
 
     it('renders without crashing', () => {
