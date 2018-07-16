@@ -28,7 +28,7 @@ describe('given a <Comment> component is mounted', () => {
         }
     };
     const store = createStore(reducer,initialState);
-    const component = shallow(< Comment store={ store } />);
+    const component = shallow(< Comment store={store} postId= {9999} commentId={999} />);
 
     it('renders without crashing', () => {
         expect(component.exists()).toEqual(true);
@@ -59,7 +59,7 @@ describe('<Comment> component renders', () => {
     };
 
     const store = createStore(reducer,initialState);
-    const component = shallow(< Comment store={ store } />);
+    const component = shallow(< Comment store={ store } postId= {9999} commentId={999} />);
 
     it('renders the comment details', () => {
         expect(component.dive().find('.comment-body').length).toEqual(1);
@@ -86,7 +86,7 @@ describe('<Comment> component on upvote click', () => {
     };
 
     const store = createStore(reducer, initialState);
-    const component = shallow(< Comment store={ store } />);
+    const component = shallow(< Comment store={ store } postId= {9999} commentId={999} />);
 
     it('handles voting on vote click', () => {
         component.dive().find('.comment-vote').simulate('click');
@@ -113,7 +113,7 @@ describe('<Comment> component on downvote click', () => {
     };
 
     const store = createStore(reducer, initialState);
-    const component = shallow(< Comment store={ store } />);
+    const component = shallow(< Comment store={ store } postId= {9999} commentId={999} />);
 
     it('handles voting on vote click', () => {
         component.dive().find('.comment-downVote').simulate('click');
@@ -140,7 +140,7 @@ describe('<Comment> component on delete comment', () => {
     };
 
     const store = createStore(reducer, initialState);
-    const component = shallow(< Comment store={ store } />);
+    const component = shallow(< Comment store={ store } postId= {9999} commentId={999} />);
 
     it('handles delete on comment', () => {
         component.dive().find('.comment-delete').simulate('click');

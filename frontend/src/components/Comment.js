@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { commentActions } from '../actions';
+import PropTypes from 'prop-types';
 
 class Comment extends Component {
 
@@ -37,12 +38,16 @@ class Comment extends Component {
         );
     };
 }
+const propTypes = {
+    postId: PropTypes.number.isRequired,
+    commentId:  PropTypes.number.isRequired
+}
 
-const mapStateToProps = (state) =>
-    state.posts["9999"].comments["999"] ? ({
+const mapStateToProps = (state, ownProps) =>
+    state.posts[ownProps.postId].comments[ownProps.commentId] ? ({
         comment: {
-            ...state.posts["9999"].comments["999"],
-            postId: state.posts["9999"].id
+            ...state.posts[ownProps.postId].comments[ownProps.commentId],
+            postId: state.posts[ownProps.postId].id
         }
     }):({ comment:{}});
 
