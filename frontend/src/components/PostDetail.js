@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postActions } from '../actions/index';
+import PropTypes from 'prop-types';
 
 class PostDetail extends Component {
 
@@ -43,11 +44,14 @@ class PostDetail extends Component {
         );
     };
 }
-
+const propTypes = {
+    postId: PropTypes.number.isRequired
+}
 const mapStateToProps = (state, ownProps) =>
+
     ({
         post: {
-            ...state.posts["2"]
+            ...state.posts[ownProps.postId]
         }
     });
 
@@ -56,5 +60,6 @@ const mapDispatchToProps = dispatch => ({
     downVotePost: postId => dispatch(postActions.downvotePost(postId)),
     delete: postId => dispatch(postActions.deletePost(postId))
 });
+
 
 export default connect(mapStateToProps,mapDispatchToProps)(PostDetail);
