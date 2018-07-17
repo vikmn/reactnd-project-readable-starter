@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { commentActions } from '../actions';
 import PropTypes from 'prop-types';
 
-class Comment extends Component {
+export class Comment extends Component {
 
     constructor(props) {
         super(props);

@@ -4,31 +4,38 @@ import Comment from './Comment';
 import { createStore } from 'redux';
 import reducer from '../reducers/reducer';
 
+const commentId = 999;
+const postId = 9999;
 const comment = {
-    id: 999,
+    id: commentId,
     body: "comment body goes here",
     author: "author-1",
     currentScore: 2,
     votes: 0,
 };
 
+const post = {
+    id: postId,
+    votes: 0,
+    comments: {
+        [commentId]: {
+            ...comment
+        }
+    }
+};
+
+const initialState = {
+    posts: {
+        [postId]: {
+            ...post
+        }
+    }
+};
+
 describe('given a <Comment> component is mounted', () => {
 
-    const initialState = {
-        posts: {
-            "9999": {
-                id: 9999,
-                votes: 0,
-                comments: {
-                    "999": {
-                        ...comment
-                    }
-                }
-            }
-        }
-    };
     const store = createStore(reducer,initialState);
-    const component = shallow(< Comment store={store} postId= {9999} commentId={999} />);
+    const component = shallow(< Comment store={store} postId= {postId} commentId={commentId} />);
 
     it('renders without crashing', () => {
         expect(component.exists()).toEqual(true);
@@ -37,29 +44,15 @@ describe('given a <Comment> component is mounted', () => {
     it('verifies the component populates the comment details', () => {
         expect(component.props().comment).toEqual({
             ...comment,
-            postId: 9999
+            postId: postId
         });
     });
 });
 
 describe('<Comment> component renders', () => {
 
-    const initialState = {
-        posts: {
-            "9999": {
-                id: 9999,
-                votes: 0,
-                comments: {
-                    "999": {
-                        ...comment,
-                    }
-                }
-            }
-        }
-    };
-
     const store = createStore(reducer,initialState);
-    const component = shallow(< Comment store={ store } postId= {9999} commentId={999} />);
+    const component = shallow(< Comment store={ store } postId= {postId} commentId={commentId} />);
 
     it('renders the comment details', () => {
         expect(component.dive().find('.comment-body').length).toEqual(1);
@@ -72,12 +65,12 @@ describe('<Comment> component on upvote click', () => {
 
     const initialState = {
         posts: {
-            "9999": {
-                id: 9999,
-                votes: 0,
+            [postId]: {
+                ...post,
                 comments: {
-                    "999": {
-                        ...comment,
+                    ...post.comments,
+                    [commentId]: {
+                        ...post.comments[commentId],
                         votes: 2,
                     }
                 }
@@ -86,7 +79,7 @@ describe('<Comment> component on upvote click', () => {
     };
 
     const store = createStore(reducer, initialState);
-    const component = shallow(< Comment store={ store } postId= {9999} commentId={999} />);
+    const component = shallow(< Comment store={ store } postId= {postId} commentId={commentId} />);
 
     it('handles voting on vote click', () => {
         component.dive().find('.comment-vote').simulate('click');
@@ -99,12 +92,12 @@ describe('<Comment> component on downvote click', () => {
 
     const initialState = {
         posts: {
-            "9999": {
-                id: 9999,
-                votes: 0,
+            [postId]: {
+                ...post,
                 comments: {
-                    "999": {
-                        ...comment,
+                    ...post.comments,
+                    [commentId]: {
+                        ...post.comments[commentId],
                         votes: 2,
                     }
                 }
@@ -113,7 +106,7 @@ describe('<Comment> component on downvote click', () => {
     };
 
     const store = createStore(reducer, initialState);
-    const component = shallow(< Comment store={ store } postId= {9999} commentId={999} />);
+    const component = shallow(< Comment store={ store } postId= {postId} commentId={commentId} />);
 
     it('handles voting on vote click', () => {
         component.dive().find('.comment-downVote').simulate('click');
@@ -124,23 +117,8 @@ describe('<Comment> component on downvote click', () => {
 
 describe('<Comment> component on delete comment', () => {
 
-    const initialState = {
-        posts: {
-            "9999": {
-                id: 9999,
-                votes: 0,
-                comments: {
-                    "999": {
-                        ...comment,
-                        votes: 3
-                    }
-                }
-            }
-        }
-    };
-
     const store = createStore(reducer, initialState);
-    const component = shallow(< Comment store={ store } postId= {9999} commentId={999} />);
+    const component = shallow(< Comment store={ store } postId= {postId} commentId={commentId} />);
 
     it('handles delete on comment', () => {
         component.dive().find('.comment-delete').simulate('click');

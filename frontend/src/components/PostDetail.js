@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { postActions } from '../actions/index';
 import PropTypes from 'prop-types';
 
-class PostDetail extends Component {
+export class PostDetail extends Component {
 
     constructor(props) {
         super(props);
