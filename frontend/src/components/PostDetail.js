@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postActions } from '../actions/index';
 import PropTypes from 'prop-types';
+import { MdThumbUp, MdThumbsDown } from 'react-icons/lib/md';
 
 export class PostDetail extends Component {
 
@@ -36,8 +37,8 @@ export class PostDetail extends Component {
                     <input className="post-author" value={postDetails.author} onChange={()=>{}} />
                     <input className="post-commentCount" value={postDetails.comments.length} onChange={()=>{}}/>
                     <input className="post-currentScore" value={postDetails.currentScore} onChange={()=>{}} />
-                    <input type="button" className="post-vote" onClick={ () => this.upVotePost(postDetails.id) } />
-                    <input type="button" className="post-downVote" onClick={ () => this.downVotePost(postDetails.id) } />
+                    <MdThumbUp type="image" className="post-vote" onClick={ () => this.upVotePost(postDetails.id) } />
+                    <MdThumbsDown type="image" className="post-downVote" onClick={ () => this.downVotePost(postDetails.id) } />
                     <input type="button" className="post-delete" onClick={ () => this.deletePost(postDetails.id) } />
                 </div>}
             </div>
