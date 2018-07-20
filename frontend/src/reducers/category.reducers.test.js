@@ -12,6 +12,7 @@ describe('Category Actions', () => {
         const expectedState = category;
         expect(reducer(initialState, action).categories[category.id]).toEqual(expectedState);
     });
+
     it('gets all the categories', () => {
         const category = { id: 1, name: "categoryA" };
         const initialState = {

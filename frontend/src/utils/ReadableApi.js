@@ -19,7 +19,7 @@ export const clientRequest = (url, header = headers) => fetch(url, { headers: he
 
 export const getAllCategories = () =>
   clientRequest(`${api}/categories`)
-    .then(data => data)
+
 
 export const getCategoryPosts = category =>
   clientRequest(`${api}/${category}/posts`)
