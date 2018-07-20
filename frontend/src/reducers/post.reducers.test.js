@@ -1,5 +1,5 @@
 import { reducer } from './reducer';
-import { postActions, categoryActions } from '../actions/.';
+import { postActions } from '../actions/.';
 
 describe('Reducer', () => {
     it('Should return the initial state when no action passed', () => {
@@ -105,36 +105,3 @@ describe('Post Actions', () => {
     });
 });
 
-describe('Category Actions', () => {
-    it('creates a category', () => {
-
-        const initialState = {
-            categories: {},
-            posts: {}
-        }; 
-        const category = { id: 1, name: "categoryA" };
-        const action = categoryActions.createCategory(category);
-
-        const expectedState = category;
-
-        expect(reducer(initialState, action).categories[category.id]).toEqual(expectedState);
-    });
-
-
-    it('deletes the specified category', () => {
-        const categoryId = 2;
-
-        const initialState = {
-            categories: {
-                "2": {
-                    id: categoryId,
-                    name: "categoryA"
-                }
-            }
-        };
-
-        const action = categoryActions.deleteCategory(categoryId);
-
-        expect(reducer(initialState, action).categories).toEqual({});
-    });
-});

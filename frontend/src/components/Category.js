@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Category extends Component{
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <ol className="list-container">

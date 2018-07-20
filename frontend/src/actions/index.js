@@ -15,6 +15,11 @@ export const categoryActions = {
             id: categoryId,
         };
     },
+    getCategories() {
+        return {
+            type: CATEGORY.ALL_CATEGORIES,
+        }
+    }
 
 };
 

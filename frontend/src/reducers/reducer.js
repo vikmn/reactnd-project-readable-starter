@@ -7,7 +7,7 @@ export const initialState = {
 
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case CATEGORY.CREATE:
+       case CATEGORY.CREATE:
             return {
                 ...state,
                 categories: {
