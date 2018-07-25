@@ -30,6 +30,16 @@ export const reducer = (state = initialState, action) => {
                         }
                     }, {})
             };
+        case CATEGORY.ALL_CATEGORIES:
+            return {
+                ...state,
+                categories:
+                    action.categories.reduce((acc, cur) => ({
+                        ...acc,
+                        [cur.name]: cur
+                    })
+                , {})
+            };
         case POST.CREATE:
             return {
                 ...state,

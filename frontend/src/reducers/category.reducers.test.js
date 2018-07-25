@@ -1,5 +1,6 @@
 import { reducer } from './reducer';
 import { categoryActions } from '../actions/.';
+import { access } from 'fs';
 
 describe('Category Actions', () => {
     it('creates a category', () => {
@@ -14,25 +15,25 @@ describe('Category Actions', () => {
     });
 
     it('gets all the categories', () => {
-        const category = { id: 1, name: "categoryA" };
+        const category = { name: "1", path: "1" };
         const initialState = {
-            categories: {
-                "1": {
-                    ...category
-                },
-                "2": {
-                    id: 2,
-                    name: "categoryB"
-                }
-            },
+            categories: {},
             posts: {}
         };
-        const action = categoryActions.getCategories();
+        const categories = [{name:"1", path:"1"},{name:"2", path:"2"}]
+        const action = categoryActions.receiveCategories(categories);
         const expectedState = {
-           ...initialState.categories
+            "1": {
+                ...category
+            },
+            "2": {
+                name: "2",
+                path: "2"
+            }
         };
         expect(reducer(initialState, action).categories).toEqual(expectedState);
     });
+
     it('deletes the specified category', () => {
         const categoryId = 2;
         const initialState = {

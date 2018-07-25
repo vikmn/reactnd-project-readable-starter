@@ -16,7 +16,7 @@ describe('Category actions', () => {
         const expectedAction = {
             type: CATEGORY.ALL_CATEGORIES,
         };
-        expect(categoryActions.getCategories()).toEqual(expectedAction);
+        expect(categoryActions.receiveCategories()).toEqual(expectedAction);
     });
     
     it('Should create an action to delete a category', () => {

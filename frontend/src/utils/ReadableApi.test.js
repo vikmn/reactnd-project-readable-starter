@@ -31,11 +31,12 @@ describe('calling the api with header', () => {
   });
 
   it('returns all categories', () => {
-    fetchMock.get('http://localhost:3001/categories', { data: "12345" });
+    fetchMock.get('http://localhost:3001/categories',
+      { categories: [{ name: "12345", path: "12345" }] });
 
     getAllCategories()
       .then(res => {
-        expect(res.data).toBe("12345");
+        expect(res.categories).toEqual([{ name:"12345", path:"12345"}]);
       });
     });
   

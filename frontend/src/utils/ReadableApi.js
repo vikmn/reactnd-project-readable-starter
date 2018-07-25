@@ -12,14 +12,10 @@ const headers = {
   Authorization: token
 };
 
-export const clientRequest = (url, header = headers) => fetch(url, { headers: header })
-  .then(response => {
-    return response.json();
-  });
+export const clientRequest = (url, header = headers) =>
+  fetch(url, { headers: header }).then(res => res.json());
 
-export const getAllCategories = () =>
-  clientRequest(`${api}/categories`)
-
+export const getAllCategories = () => clientRequest(`${api}/categories`)
 
 export const getCategoryPosts = category =>
   clientRequest(`${api}/${category}/posts`)
