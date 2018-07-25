@@ -17,17 +17,11 @@ export const clientRequest = (url, header = headers) =>
 
 export const getAllCategories = () => clientRequest(`${api}/categories`)
 
-export const getCategoryPosts = category =>
-  clientRequest(`${api}/${category}/posts`)
-    .then(data => data)
+export const getPostsForCategory = category => clientRequest(`${api}/${category}/posts`)
 
-export const getAllPosts = () =>
-  clientRequest(`${api}/posts`)
-    .then(data => data)
-      
-export const getPost = postId =>
-  clientRequest(`${api}/posts/${postId}`)
-    .then(data => data.data)
+export const getAllPosts = () => clientRequest(`${api}/posts`)
+
+export const getPost = postId => clientRequest(`${api}/posts/${postId}`)
 
 export const updatePost = (post) =>
 fetch(`${api}/posts/${post.id}`, {

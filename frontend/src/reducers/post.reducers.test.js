@@ -103,5 +103,33 @@ describe('Post Actions', () => {
 
         expect(reducer(initialState, action).posts).toEqual({});
     });
+    
+    it('gets posts for the specified category', () => {
+        const category = { name: "1", path: "1" };
+        const post = {
+            id: 2,
+            votes: 3,
+            comments: {}
+        };
+        const initialState = {
+            categories: {},
+            posts: {
+                "3": {
+                    ...post,
+                    id: 3,
+                }
+            }
+        };
+        
+        const action = postActions.receivePosts(category,[post]);
+        const expectedState = {
+            "2": post,
+            "3": {
+                ...post,
+                id:3
+            }
+        };
+        expect(reducer(initialState, action).posts).toEqual(expectedState);
+    });
 });
 

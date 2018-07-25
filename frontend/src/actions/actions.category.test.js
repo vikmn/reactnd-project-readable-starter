@@ -12,7 +12,7 @@ describe('Category actions', () => {
         expect(categoryActions.createCategory(category)).toEqual(expectedAction);
     });
 
-    it('Should get the categories for post', () => {
+    it('Should get a list of all categories', () => {
         const expectedAction = {
             type: CATEGORY.ALL_CATEGORIES,
         };

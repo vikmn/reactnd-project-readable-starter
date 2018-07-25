@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCategories } from '../actions';
+import { getCategories, getCategoryPosts } from '../actions';
+import { Posts } from './Posts';
 
-class Category extends Component{
+export class Category extends Component{
 
     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch(getCategories())
+        console.log(dispatch);
+        dispatch(getCategories());
+    }
+
+    getPosts = category => {
+        this.props.dispatch(getCategoryPosts(category))
     }
 
     render() {
         return (
-            <ol className="list-container">
+            <div className="list-container">
                 {this.props.categories.map(category => (
-                    <li key={category.name}>{category.name}</li>
+                    <div key={category.name}>
+                        <div key={category.name}>{category.name}</div>
+                        <Posts category={category.name} loadPosts ={this.getPosts} />
+                    </div>
+                    
                 ))}
-            </ol>
+            </div>
         );
     }
 }

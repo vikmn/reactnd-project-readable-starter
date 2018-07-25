@@ -36,4 +36,15 @@ describe('Post actions', () => {
         };
         expect(postActions.deletePost(postId)).toEqual(expectedAction);
     });
+
+    it('Should get a list of posts for the specified category', () => {
+        const category = { name: "categoryA", path: "categoryA" };
+        const expectedAction = {
+            type: POST.CATEGORY_POSTS,
+            category: category,
+            posts:[post]
+        };
+        expect(postActions.receivePosts(category, [post])).toEqual(expectedAction);
+    });
+
 });

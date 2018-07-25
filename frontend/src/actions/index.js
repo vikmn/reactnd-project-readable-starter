@@ -1,5 +1,5 @@
 import { CATEGORY, POST, COMMENT } from "./types";
-import { getAllCategories }from "../utils/ReadableApi";
+import { getAllCategories, getPostsForCategory, getAllPosts }from "../utils/ReadableApi";
 
 export const categoryActions = {
     createCategory(category) {
@@ -30,7 +30,16 @@ export const getCategories = () => dispatch => (
         .then(data => {
             dispatch(categoryActions.receiveCategories(data.categories))
         })
-    )
+);
+
+export const getCategoryPosts = category => dispatch => (
+    getPostsForCategory(category)
+        .then(data => {
+            console.log(data);
+            dispatch(postActions.receivePosts("react",[]))
+        })
+);
+
 
 export const postActions = {
 
@@ -61,7 +70,15 @@ export const postActions = {
             type: POST.DELETE,
             id: postId,
         }
-    }  
+    },
+
+    receivePosts(category, posts) {
+        return {
+            type: POST.CATEGORY_POSTS,
+            category,
+            posts
+        }
+    }
 };
 
 export const commentActions = {
