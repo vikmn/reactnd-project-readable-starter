@@ -8,6 +8,7 @@ export class PostDetail extends Component {
     state = {
         mode: "VIEW"
     }
+
     constructor(props) {
         super(props);
 
@@ -30,16 +31,17 @@ export class PostDetail extends Component {
 
     render() {
         const postDetails = this.props.post;
+        const { mode } = this.state;
         return (
             <div>
-                {postDetails && this.state.mode === "VIEW" &&
+                {postDetails && mode === "VIEW" &&
                 <div key={postDetails.id}>
                     <div>{postDetails.id}</div>
                     <div>{postDetails.title} </div>
                     <div> {postDetails.body} </div>
                     <div> {postDetails.author} </div>
                 </div>}
-                {postDetails && this.state.mode === "EDIT" &&
+                {postDetails && mode === "EDIT" &&
                     <div key={postDetails.id}>
                         <input className="post-title" value={postDetails.title} onChange={()=>{}}/>
                         <input className="post-body" value={postDetails.body} onChange={()=>{}} />
@@ -56,11 +58,13 @@ export class PostDetail extends Component {
     };
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    post: {
-        ...state.posts[ownProps.postId]
-    }
-});
+const mapStateToProps = (state, ownProps) => {
+    return ({
+        post: {
+            ...state.posts[ownProps.postId]
+        }
+    });
+}
 
 const mapDispatchToProps = dispatch => ({
     upvotePost: postId => dispatch(postActions.upvotePost(postId)),

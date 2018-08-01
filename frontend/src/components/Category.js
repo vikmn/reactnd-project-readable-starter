@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getCategories, getCategoryPosts } from '../actions';
-import { Posts } from './Posts';
+import Posts from './Posts';
 
 export class Category extends Component{
 
@@ -11,9 +11,7 @@ export class Category extends Component{
         dispatch(getCategories());
     }
 
-    getPosts = category => {
-        this.props.dispatch(getCategoryPosts(category))
-    }
+
 
     render() {
         const { match: { params } } = this.props;
@@ -25,7 +23,7 @@ export class Category extends Component{
                     </div>
                 ))}
                 <div>{params.category}</div>
-                <Posts category={params.category} loadPosts={ () => this.getPosts(params.category)} posts={this.props.posts}/>
+                <Posts category={params.category}/>
             </div>
         );
     }
@@ -43,9 +41,9 @@ const mapStateToProps = (state, ownProps) => {
                         .filter(post  => post.category===key)
                 }
                 )),
-        posts: Object.keys(state.posts)
-            .map(key => state.posts[key])
-            .filter(post => post.category === params.category),
+        // posts: Object.keys(state.posts)
+        //     .map(key => state.posts[key])
+        //     .filter(post => post.category === params.category),
     })
 };
 

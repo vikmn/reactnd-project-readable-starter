@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { PostDetail } from './PostDetail';
+import PostDetail from './PostDetail';
+import { getCategoryPosts } from '../actions';
 
 export class Posts extends Component{
 
     componentDidMount() {
-        this.props.loadPosts();
+       this.getPosts(this.props.category)
+    }
+
+    getPosts = category => {
+        this.props.dispatch(getCategoryPosts(category))
     }
 
     render() {
         return (
             <div className="list-container">
                 {this.props.posts.map(post => (
-                    <PostDetail post={post} key={post.id}/>
+                    <PostDetail key={post.id} postId={post.id}/>
                 ))}
             </div>
         );
@@ -20,9 +25,14 @@ export class Posts extends Component{
 }
 
 const mapStateToProps = (state, ownProps) => {
-    return ({
+    return ownProps.category ?({
         posts:Object.keys(state.posts)
-        .map(key => state.posts[key])
+            .map(key => state.posts[key])
+            .filter(post => post.category === ownProps.category)
+    }) :
+    ({
+        posts:Object.keys(state.posts)
+            .map(key => state.posts[key])
     })
 };
 
