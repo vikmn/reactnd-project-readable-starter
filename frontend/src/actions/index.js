@@ -35,8 +35,7 @@ export const getCategories = () => dispatch => (
 export const getCategoryPosts = category => dispatch => (
     getPostsForCategory(category)
         .then(data => {
-            console.log(data);
-            dispatch(postActions.receivePosts("react",[]))
+            dispatch(postActions.receivePosts(category, data));
         })
 );
 

@@ -1,4 +1,4 @@
-import { getAllCategories, clientRequest, getCategoryPosts, getAllPosts, getPost } from './ReadableApi';
+import { getAllCategories, clientRequest, getPostsForCategory, getAllPosts, getPost } from './ReadableApi';
 
 const headers = {
     Accept: "application/json",
@@ -43,7 +43,7 @@ describe('calling the api with header', () => {
   it('returns all posts for a specified category', () => {
     fetchMock.get('http://localhost:3001/categoryId/posts', { data: "12345" });
 
-    getCategoryPosts("categoryId")
+    getPostsForCategory("categoryId")
       .then(res => {
         expect(res.data).toBe("12345");
       });
@@ -63,7 +63,7 @@ describe('calling the api with header', () => {
 
     getPost("postId")
       .then(res => {
-        expect(res.post).toBe("12345");
+        expect(res.data.post).toBe("12345");
       });
     });
 });

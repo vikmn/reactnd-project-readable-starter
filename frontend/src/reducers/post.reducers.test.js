@@ -109,24 +109,31 @@ describe('Post Actions', () => {
         const post = {
             id: 2,
             votes: 3,
-            comments: {}
+            comments: {},
         };
         const initialState = {
-            categories: {},
+            categories: {
+                [category.name]:{ ...category}
+            },
             posts: {
                 "3": {
                     ...post,
                     id: 3,
+                    category:category.name
                 }
             }
         };
         
-        const action = postActions.receivePosts(category,[post]);
+        const action = postActions.receivePosts(category.name, [post]);
         const expectedState = {
-            "2": post,
+            "2": {
+                ...post,
+                category: category.name,
+            },
             "3": {
                 ...post,
-                id:3
+                id: 3,
+                category: category.name,
             }
         };
         expect(reducer(initialState, action).posts).toEqual(expectedState);

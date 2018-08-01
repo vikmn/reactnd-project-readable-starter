@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postActions } from '../actions/index';
-import PropTypes from 'prop-types';
 import { MdThumbUp, MdThumbsDown } from 'react-icons/lib/md';
 
 export class PostDetail extends Component {
 
+    state = {
+        mode: "VIEW"
+    }
     constructor(props) {
         super(props);
 
@@ -30,31 +32,35 @@ export class PostDetail extends Component {
         const postDetails = this.props.post;
         return (
             <div>
-                {postDetails &&
-                <div>
-                    <input className="post-title" value={postDetails.title} onChange={()=>{}}/>
-                    <input className="post-body" value={postDetails.body} onChange={()=>{}} />
-                    <input className="post-author" value={postDetails.author} onChange={()=>{}} />
-                    <input className="post-commentCount" value={postDetails.comments.length} onChange={()=>{}}/>
-                    <input className="post-currentScore" value={postDetails.currentScore} onChange={()=>{}} />
-                    <MdThumbUp type="image" className="post-vote" onClick={ () => this.upVotePost(postDetails.id) } />
-                    <MdThumbsDown type="image" className="post-downVote" onClick={ () => this.downVotePost(postDetails.id) } />
-                    <input type="button" className="post-delete" onClick={ () => this.deletePost(postDetails.id) } />
+                {postDetails && this.state.mode === "VIEW" &&
+                <div key={postDetails.id}>
+                    <div>{postDetails.id}</div>
+                    <div>{postDetails.title} </div>
+                    <div> {postDetails.body} </div>
+                    <div> {postDetails.author} </div>
                 </div>}
+                {postDetails && this.state.mode === "EDIT" &&
+                    <div key={postDetails.id}>
+                        <input className="post-title" value={postDetails.title} onChange={()=>{}}/>
+                        <input className="post-body" value={postDetails.body} onChange={()=>{}} />
+                        <input className="post-author" value={postDetails.author} onChange={()=>{}} />
+                        <input className="post-commentCount" value={postDetails.comments.length} onChange={()=>{}}/>
+                        <input className="post-currentScore" value={postDetails.currentScore} onChange={()=>{}} />
+                        <MdThumbUp type="image" className="post-vote" onClick={ () => this.upVotePost(postDetails.id) } />
+                        <MdThumbsDown type="image" className="post-downVote" onClick={ () => this.downVotePost(postDetails.id) } />
+                        <input type="button" className="post-delete" onClick={ () => this.deletePost(postDetails.id) } />
+                    </div>
+                }
             </div>
         );
     };
 }
-const propTypes = {
-    postId: PropTypes.number.isRequired
-}
-const mapStateToProps = (state, ownProps) =>
 
-    ({
-        post: {
-            ...state.posts[ownProps.postId]
-        }
-    });
+const mapStateToProps = (state, ownProps) => ({
+    post: {
+        ...state.posts[ownProps.postId]
+    }
+});
 
 const mapDispatchToProps = dispatch => ({
     upvotePost: postId => dispatch(postActions.upvotePost(postId)),

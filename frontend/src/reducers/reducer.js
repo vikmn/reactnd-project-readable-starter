@@ -84,7 +84,10 @@ export const reducer = (state = initialState, action) => {
         case POST.CATEGORY_POSTS:
             const posts = action.posts.reduce((acc, cur) => ({
                 ...acc,
-                [cur.id]: cur
+                [cur.id]: {
+                    ...cur,
+                    category: action.category
+                }
             }), {});
             return {
                 ...state,
