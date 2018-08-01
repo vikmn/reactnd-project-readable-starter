@@ -2,7 +2,7 @@ import { POST, COMMENT, CATEGORY } from "../actions/types";
 
 export const initialState = {
     categories: {},
-    posts: {}
+    posts: {},
 };
 
 export const reducer = (state = initialState, action) => {
@@ -86,7 +86,8 @@ export const reducer = (state = initialState, action) => {
                 ...acc,
                 [cur.id]: {
                     ...cur,
-                    category: action.category
+                    category: action.category,
+                    comments:{}
                 }
             }), {});
             return {
@@ -94,6 +95,26 @@ export const reducer = (state = initialState, action) => {
                 posts: {
                     ...state.posts,
                     ...posts
+                }
+            };
+        case COMMENT.POST_COMMENTS:
+            const comments = action.comments.reduce((acc, cur) => ({
+                ...acc,
+                [cur.id]: {
+                    ...cur,
+                }
+            }), {});
+            return {
+                ...state,
+                posts: {
+                    ...state.posts,
+                    [action.post]: {
+                        ...state.posts[action.post],
+                        comments: {
+                            ...state.posts[action.post].comments,
+                            ...comments
+                        }
+                    }
                 }
             };
         case COMMENT.CREATE:

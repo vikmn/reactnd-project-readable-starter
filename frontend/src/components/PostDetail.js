@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postActions } from '../actions/index';
+import { postActions, getCommentsForPost } from '../actions/index';
 import { MdThumbUp, MdThumbsDown } from 'react-icons/lib/md';
 
 export class PostDetail extends Component {
@@ -11,10 +11,15 @@ export class PostDetail extends Component {
 
     constructor(props) {
         super(props);
-
+        
         this.upVotePost = this.upVotePost.bind(this);
         this.downVotePost = this.downVotePost.bind(this);
         this.deletePost = this.deletePost.bind(this);
+    }
+
+    componentDidMount() {
+        const { getPostComments, postId } = this.props;
+        getPostComments(postId)
     }
 
     upVotePost(postId) { 
@@ -67,10 +72,10 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = dispatch => ({
+    getPostComments: postId => dispatch(getCommentsForPost(postId)),
     upvotePost: postId => dispatch(postActions.upvotePost(postId)),
     downVotePost: postId => dispatch(postActions.downvotePost(postId)),
     delete: postId => dispatch(postActions.deletePost(postId))
 });
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(PostDetail);

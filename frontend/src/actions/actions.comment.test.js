@@ -52,5 +52,22 @@ describe('Comment actions', () => {
       };
 
       expect(commentActions.deleteComment(commentId, postId)).toEqual(expectedAction);
-    });
+  });
+  
+  it('Should get a list of comments for the specified post', () => {
+    const postId = 2;
+    const commentId = 1;
+    const expectedAction = {
+      type: COMMENT.POST_COMMENTS,
+      post: postId,
+      comments: [{
+        id: commentId,
+        post: postId,
+      }]
+    };
+    expect(commentActions.receiveComments(postId, [{
+      id: commentId,
+      post: postId,
+    }])).toEqual(expectedAction);
+  });
 });

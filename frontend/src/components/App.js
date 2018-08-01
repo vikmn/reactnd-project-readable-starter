@@ -6,7 +6,7 @@ import Category from './Category';
 
 const App = props =>
   (<div className="App">
-    <Route path="/:category" render={props => <Category {...props} key={props.location.key} />} />
+    <Route path="/:category" exact render={props => <Category {...props} key={props.location.key} />} />
   </div>);
 
 export default withRouter(connect() (App));

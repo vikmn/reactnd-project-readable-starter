@@ -6,11 +6,8 @@ import { getCategoryPosts } from '../actions';
 export class Posts extends Component{
 
     componentDidMount() {
-       this.getPosts(this.props.category)
-    }
-
-    getPosts = category => {
-        this.props.dispatch(getCategoryPosts(category))
+        const { getPosts, category } = this.props;
+       getPosts(category)
     }
 
     render() {
@@ -36,4 +33,8 @@ const mapStateToProps = (state, ownProps) => {
     })
 };
 
-export default connect(mapStateToProps)(Posts);
+const mapDispatchToProps = dispatch => ({
+    getPosts: category => dispatch(getCategoryPosts(category)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);

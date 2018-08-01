@@ -6,6 +6,10 @@ import { MdThumbUp, MdThumbsDown } from 'react-icons/lib/md';
 
 export class Comment extends Component {
 
+    state = {
+        mode: "VIEW"
+    }
+
     constructor(props) {
         super(props);
     }
@@ -26,7 +30,11 @@ export class Comment extends Component {
         const commentDetails = this.props.comment;
         return (
             <div>
-                {commentDetails &&
+                {commentDetails && this.state.mode === "VIEW" &&
+                <div key={commentDetails.id}>
+                    <div>{commentDetails.id}</div>
+                </div>}
+                {commentDetails && this.state.mode === "EDIT" &&
                 <div>
                     <input className="comment-body" value={commentDetails.body} onChange={()=>{}} />
                     <input className="comment-author" value={commentDetails.author} onChange={()=>{}} />

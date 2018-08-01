@@ -23,6 +23,8 @@ export const getAllPosts = () => clientRequest(`${api}/posts`)
 
 export const getPost = postId => clientRequest(`${api}/posts/${postId}`)
 
+export const getPostComments = postId => clientRequest(`${api}/posts/${postId}/comments`)
+
 export const updatePost = (post) =>
 fetch(`${api}/posts/${post.id}`, {
     method: "PUT",
@@ -56,8 +58,3 @@ export const addVoteToPost = (post, vote) =>
   })
     .then(res => res.json())
         .then(data => data.post)
-
-export const getPostComments = postId =>
-  fetch(`${api}/posts/${postId}/comments`, { headers })
-    .then(res => res.json())
-    .then(data => data.comments)

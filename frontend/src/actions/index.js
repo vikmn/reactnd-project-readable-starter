@@ -1,5 +1,5 @@
 import { CATEGORY, POST, COMMENT } from "./types";
-import { getAllCategories, getPostsForCategory, getAllPosts }from "../utils/ReadableApi";
+import { getAllCategories, getPostsForCategory, getPostComments }from "../utils/ReadableApi";
 
 export const categoryActions = {
     createCategory(category) {
@@ -9,14 +9,12 @@ export const categoryActions = {
             category
         };
     },
-
     deleteCategory(categoryId) {
         return {
             type: CATEGORY.DELETE,
             id: categoryId,
         };
     },
-
     receiveCategories(categories) {
         return {
             type: CATEGORY.ALL_CATEGORIES,
@@ -39,6 +37,14 @@ export const getCategoryPosts = category => dispatch => (
         })
 );
 
+export const getCommentsForPost = post => dispatch => (
+    getPostComments(post)
+        .then(data => {
+            console.log(data);
+            dispatch(commentActions.receiveComments(post, data));
+        })
+);
+
 
 export const postActions = {
 
@@ -49,28 +55,24 @@ export const postActions = {
             post
         }
     },
-
     upvotePost(postId) {
         return {
             type: POST.UPVOTE,
             id: postId,
         }
     },
-    
     downvotePost(postId) {
         return {
             type: POST.DOWNVOTE,
             id: postId,
         }
     },
-    
     deletePost(postId) {
         return {
             type: POST.DELETE,
             id: postId,
         }
     },
-
     receivePosts(category, posts) {
         return {
             type: POST.CATEGORY_POSTS,
@@ -90,7 +92,6 @@ export const commentActions = {
             comment
         }
     },
-
     upvoteComment(commentId, postId) {
         return {
             type: COMMENT.UPVOTE,
@@ -98,7 +99,6 @@ export const commentActions = {
             postId
         }
     },
-    
     downvoteComment(commentId, postId) {
         return {
             type: COMMENT.DOWNVOTE,
@@ -106,12 +106,18 @@ export const commentActions = {
             postId
         }
     },
-
     deleteComment(commentId, postId) {
         return {
             type: COMMENT.DELETE,
             id: commentId,
             postId
         }
-    }  
+    },
+    receiveComments(post, comments) {
+        return {
+            type: COMMENT.POST_COMMENTS,
+            post,
+            comments
+        }
+    }
 };
