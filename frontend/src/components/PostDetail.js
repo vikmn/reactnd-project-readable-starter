@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postActions, getCommentsForPost } from '../actions/index';
 import { MdThumbUp, MdThumbsDown } from 'react-icons/lib/md';
+import Comment from './Comment';
 
 export class PostDetail extends Component {
 
@@ -45,6 +46,7 @@ export class PostDetail extends Component {
                     <div>{postDetails.title} </div>
                     <div> {postDetails.body} </div>
                     <div> {postDetails.author} </div>
+                    {postDetails.comments.map(comment => (<Comment commentId={comment.id} postId={postDetails.id} key={comment.id}/> ))}
                 </div>}
                 {postDetails && mode === "EDIT" &&
                     <div key={postDetails.id}>
@@ -64,9 +66,12 @@ export class PostDetail extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(Object.keys(state.posts[ownProps.postId].comments))
     return ({
         post: {
-            ...state.posts[ownProps.postId]
+            ...state.posts[ownProps.postId],
+            comments: Object.keys(state.posts[ownProps.postId].comments)
+                .map(key => state.posts[ownProps.postId].comments[key])
         }
     });
 }
