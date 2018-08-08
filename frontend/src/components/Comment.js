@@ -7,31 +7,37 @@ import { MdThumbUp, MdThumbsDown } from 'react-icons/lib/md';
 export class Comment extends Component {
 
     state = {
-        mode: "VIEW"
+        mode: ""
     }
 
     constructor(props) {
         super(props);
     }
 
+    componentDidMount() {
+        const { mode } = this.props;
+        this.setState({ mode });
+    }
+
     upvote(commentId, postId) {
         this.props.upvote(commentId, postId);
-     }
-    
+    }
+
     downvote(commentId, postId) {
         this.props.downvote(commentId, postId);
-     }
+    }
 
     deleteComment(commentId, postId) {
         this.props.delete(commentId, postId);
-     }
+    }
 
     render() {
         const commentDetails = this.props.comment;
         return (
             <div>
                 {commentDetails && this.state.mode === "VIEW" &&
-                <div key={commentDetails.id}>
+                    <div key={commentDetails.id}>
+                    <input type="button" className="comment-edit" onClick={()=> this.setState({mode:"EDIT"})} value="EDIT COMMENT"/> 
                     <div>{commentDetails.id}</div>
                 </div>}
                 {commentDetails && this.state.mode === "EDIT" &&
@@ -39,14 +45,16 @@ export class Comment extends Component {
                     <input className="comment-body" value={commentDetails.body} onChange={()=>{}} />
                     <input className="comment-author" value={commentDetails.author} onChange={()=>{}} />
                     <input className="comment-currentScore" value={commentDetails.currentScore} onChange={()=>{}} />
-                    <MdThumbUp type="image" className="comment-vote" onClick={() => this.upvote(commentDetails.id, commentDetails.postId)} />
-                    <MdThumbsDown type="image" className="comment-downVote" onClick={ () => this.downvote(commentDetails.id, commentDetails.postId) } />
-                    <input type="button" className="comment-delete" onClick={ () => this.deleteComment(commentDetails.id, commentDetails.postId) } />
+                    <input type="image" className="comment-vote" onClick={() => this.upvote(commentDetails.id, commentDetails.postId)} />
+                    <input type="image" className="comment-downVote" onClick={ () => this.downvote(commentDetails.id, commentDetails.postId) } />
+                    <input type="button" className="comment-delete" onClick={() => this.deleteComment(commentDetails.id, commentDetails.postId)} value="DELETE"/>
+                    <input type="button" className="comment-cancel" onClick={() => this.setState({mode:"VIEW"})} value="CANCEL"/>
                 </div>}
             </div>
         );
     };
 }
+
 const propTypes = {
     postId: PropTypes.number.isRequired,
     commentId:  PropTypes.number.isRequired

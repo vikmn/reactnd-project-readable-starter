@@ -14,7 +14,7 @@ export class Posts extends Component{
         return (
             <div className="list-container">
                 {this.props.posts.map(post => (
-                    <PostDetail key={post.id} postId={post.id}/>
+                    <PostDetail key={post.id} postId={post.id} mode={"VIEW"}/>
                 ))}
             </div>
         );
