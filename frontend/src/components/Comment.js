@@ -7,16 +7,25 @@ import { MdThumbUp, MdThumbsDown } from 'react-icons/lib/md';
 export class Comment extends Component {
 
     state = {
-        mode: ""
+        mode: "",
+        body : ""
     }
 
     constructor(props) {
         super(props);
+        this.upvote = this.upvote.bind(this);
+        this.downvote = this.downvote.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
+        this.cancel = this.cancel.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     componentDidMount() {
-        const { mode } = this.props;
-        this.setState({ mode });
+        const { mode,comment } = this.props;
+        this.setState({
+            mode,
+            body: comment.body
+        });
     }
 
     upvote(commentId, postId) {
@@ -31,6 +40,23 @@ export class Comment extends Component {
         this.props.delete(commentId, postId);
     }
 
+    cancel() {
+        this.setState({
+            mode: "VIEW",
+            body: this.props.comment.body
+        });
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+    
+        this.setState({
+          [name]: value
+        });
+    }
+
     render() {
         const commentDetails = this.props.comment;
         return (
@@ -38,17 +64,19 @@ export class Comment extends Component {
                 {commentDetails && this.state.mode === "VIEW" &&
                     <div key={commentDetails.id}>
                     <input type="button" className="comment-edit" onClick={()=> this.setState({mode:"EDIT"})} value="EDIT COMMENT"/> 
+                    <input type="button" className="comment-delete" onClick={() => this.deleteComment(commentDetails.id, commentDetails.postId)} value="DELETE" />
                     <div>{commentDetails.body}</div>
+                    <div>{commentDetails.author}</div>
                 </div>}
                 {commentDetails && this.state.mode === "EDIT" &&
-                <div>
-                    <input className="comment-body" value={commentDetails.body} onChange={()=>{}} />
+                <div key={commentDetails.id}>
+                    <input className="comment-body" name="body" value={this.state.body} onChange={this.handleInputChange} />
                     <input className="comment-author" value={commentDetails.author} onChange={()=>{}} />
-                    <input className="comment-currentScore" value={commentDetails.currentScore} onChange={()=>{}} />
+                    <div>{commentDetails.voteScore}</div>
                     <input type="image" className="comment-vote" onClick={() => this.upvote(commentDetails.id, commentDetails.postId)} />
                     <input type="image" className="comment-downVote" onClick={ () => this.downvote(commentDetails.id, commentDetails.postId) } />
                     <input type="button" className="comment-delete" onClick={() => this.deleteComment(commentDetails.id, commentDetails.postId)} value="DELETE"/>
-                    <input type="button" className="comment-cancel" onClick={() => this.setState({mode:"VIEW"})} value="CANCEL"/>
+                    <input type="button" className="comment-cancel" onClick={() => this.cancel() } value="CANCEL"/>
                 </div>}
             </div>
         );
