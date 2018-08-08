@@ -38,7 +38,7 @@ export class Comment extends Component {
                 {commentDetails && this.state.mode === "VIEW" &&
                     <div key={commentDetails.id}>
                     <input type="button" className="comment-edit" onClick={()=> this.setState({mode:"EDIT"})} value="EDIT COMMENT"/> 
-                    <div>{commentDetails.id}</div>
+                    <div>{commentDetails.body}</div>
                 </div>}
                 {commentDetails && this.state.mode === "EDIT" &&
                 <div>

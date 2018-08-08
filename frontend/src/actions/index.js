@@ -1,5 +1,5 @@
 import { CATEGORY, POST, COMMENT } from "./types";
-import { getAllCategories, getPostsForCategory, getPostComments }from "../utils/ReadableApi";
+import { fetchAllCategories, fetchPostsForCategory, fetchPostComments }from "../utils/ReadableApi";
 
 export const categoryActions = {
     createCategory(category) {
@@ -24,23 +24,22 @@ export const categoryActions = {
 };
 
 export const getCategories = () => dispatch => (
-    getAllCategories()
+    fetchAllCategories()
         .then(data => {
             dispatch(categoryActions.receiveCategories(data.categories))
         })
 );
 
 export const getCategoryPosts = category => dispatch => (
-    getPostsForCategory(category)
+    fetchPostsForCategory(category)
         .then(data => {
             dispatch(postActions.receivePosts(category, data));
         })
 );
 
 export const getCommentsForPost = post => dispatch => (
-    getPostComments(post)
+    fetchPostComments(post)
         .then(data => {
-            console.log(data);
             dispatch(commentActions.receiveComments(post, data));
         })
 );

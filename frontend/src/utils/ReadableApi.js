@@ -12,18 +12,18 @@ const headers = {
   Authorization: token
 };
 
-export const clientRequest = (url, header = headers) =>
+export const processRequest = (url, header = headers) =>
   fetch(url, { headers: header }).then(res => res.json());
 
-export const getAllCategories = () => clientRequest(`${api}/categories`)
+export const fetchAllCategories = () => processRequest(`${api}/categories`)
 
-export const getPostsForCategory = category => clientRequest(`${api}/${category}/posts`)
+export const fetchPostsForCategory = category => processRequest(`${api}/${category}/posts`)
 
-export const getAllPosts = () => clientRequest(`${api}/posts`)
+export const fetchAllPosts = () => processRequest(`${api}/posts`)
 
-export const getPost = postId => clientRequest(`${api}/posts/${postId}`)
+export const fetchPost = postId => processRequest(`${api}/posts/${postId}`)
 
-export const getPostComments = postId => clientRequest(`${api}/posts/${postId}/comments`)
+export const fetchPostComments = postId => processRequest(`${api}/posts/${postId}/comments`)
 
 export const updatePost = (post) =>
 fetch(`${api}/posts/${post.id}`, {
