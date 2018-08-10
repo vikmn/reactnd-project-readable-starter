@@ -18,6 +18,7 @@ export class PostDetail extends Component {
         this.downVotePost = this.downVotePost.bind(this);
         this.deletePost = this.deletePost.bind(this);
         this.cancel = this.cancel.bind(this);
+        this.savePost = this.savePost.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
@@ -41,6 +42,10 @@ export class PostDetail extends Component {
 
     deletePost(postId) {
         this.props.delete(postId);
+    }
+
+    savePost(postId) {
+        // this.props.delete(postId);
     }
 
     handleInputChange(event) {

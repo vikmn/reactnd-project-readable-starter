@@ -104,6 +104,37 @@ describe('Post Actions', () => {
         expect(reducer(initialState, action).posts).toEqual({});
     });
     
+    it('updates the specified post', () => {
+        const postId = 2;
+
+        const originalPost = {
+            id: postId,
+            title: "original title",
+            body: "original body",
+            votes: 0,
+            comments: {}
+        };
+
+        const initialState = {
+            posts: {
+                "2": originalPost
+            }
+        };
+
+        const updatedPost = {
+            ...originalPost,
+            title: "updated title",
+            body:"updated body"
+        }
+
+        const action = postActions.updatePost(updatedPost);
+
+        expect(reducer(initialState, action).posts["2"])
+            .toEqual({
+                ...updatedPost
+            });
+    });
+    
     it('gets posts for the specified category', () => {
         const category = { name: "1", path: "1" };
         const post = {

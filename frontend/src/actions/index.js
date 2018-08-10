@@ -72,6 +72,13 @@ export const postActions = {
             id: postId,
         }
     },
+    updatePost(post) {
+        return {
+            type: POST.UPDATE,
+            id: post.id,
+            post
+        }
+    },
     receivePosts(category, posts) {
         return {
             type: POST.CATEGORY_POSTS,

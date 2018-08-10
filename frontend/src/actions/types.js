@@ -8,7 +8,8 @@ export const POST = {
     CREATE : "CREATE_POST",
     UPVOTE : "UPVOTE_POST",
     DOWNVOTE : "DOWNVOTE_POST",
-    DELETE : "DELETE_POST"
+    DELETE: "DELETE_POST",
+    UPDATE: "UPDATE_POST"
 };
 
 export const COMMENT = {
